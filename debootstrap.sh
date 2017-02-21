@@ -113,7 +113,7 @@ if [ -e "$(which pbzip2)" ]; then
 elif [ -e "$(which bzip2)" ]; then
     BZIP2="bzip2"
 else
-    echo "No HTTP download tool found."
+    echo "No decompression tool found."
     exit 1
 fi
 
