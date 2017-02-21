@@ -26,7 +26,7 @@
 
 set -e
 
-ARCH=$(uname -m)
+ARCH=$(sudo uname -m)
 VERSION="openSUSE Debootstrap 1.0"
 
 usage () {
