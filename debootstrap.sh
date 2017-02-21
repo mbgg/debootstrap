@@ -29,7 +29,7 @@ set -e
 ARCH=$(uname -m)
 VERSION="openSUSE Debootstrap 1.0"
 
-function usage() {
+usage () {
     echo "XXX need to write help text"
     exit 1
 }
@@ -80,19 +80,21 @@ if [ ! "$SUITE" -o ! "$TARGET" ]; then
     usage
 fi
 
-declare -A URLs
-declare -A URLs=( \
-	["tumbleweed_armv6l"]="http://download.opensuse.org/ports/armv6hl/tumbleweed/images/openSUSE-Tumbleweed-ARM-JeOS.armv6-rootfs.armv6l-Current.tbz" \
-	["tumbleweed_armv7l"]="http://download.opensuse.org/ports/armv7hl/tumbleweed/images/openSUSE-Tumbleweed-ARM-JeOS.armv7-rootfs.armv7l-Current.tbz" \
-	["tumbleweed_aarch64"]="http://download.opensuse.org/ports/aarch64/tumbleweed/images/openSUSE-Tumbleweed-ARM-JeOS.aarch64-rootfs.aarch64-Current.tbz" \
-	["tumbleweed_x86_64"]="http://download.opensuse.org/repositories/home:/algraf:/debootstrap/images/openSUSE-Tumbleweed-x86_64-JeOS.x86_64-rootfs.x86_64-Current.tbz" \
-)
+#declare -A URLs
+#declare -A URLs=( \
+#	["tumbleweed_armv6l"]="http://download.opensuse.org/ports/armv6hl/tumbleweed/images/openSUSE-Tumbleweed-ARM-JeOS.armv6-rootfs.armv6l-Current.tbz" \
+#	["tumbleweed_armv7l"]="http://download.opensuse.org/ports/armv7hl/tumbleweed/images/openSUSE-Tumbleweed-ARM-JeOS.armv7-rootfs.armv7l-Current.tbz" \
+#	["tumbleweed_aarch64"]="http://download.opensuse.org/ports/aarch64/tumbleweed/images/openSUSE-Tumbleweed-ARM-JeOS.aarch64-rootfs.aarch64-Current.tbz" \
+#	["tumbleweed_x86_64"]="http://download.opensuse.org/repositories/home:/algraf:/debootstrap/images/openSUSE-Tumbleweed-x86_64-JeOS.x86_64-rootfs.x86_64-Current.tbz" \
+#)
 
 # Rename factory to tumbleweed
 [ "$SUITE" = "factory" ] && SUITE=tumbleweed
 
-key="${SUITE}_${ARCH}"
-URL="${URLs["$key"]}"
+#key="${SUITE}_${ARCH}"
+#URL="${URLs["$key"]}"
+
+URL='http://download.opensuse.org/ports/aarch64/tumbleweed/images/openSUSE-Tumbleweed-ARM-JeOS.aarch64-rootfs.aarch64-Current.tbz'
 
 if [ ! "$URL" ]; then
     echo "Unknown Distribution / Architecture: $key"
