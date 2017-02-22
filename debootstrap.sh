@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/dash
 #
 # The openSUSE Distribution Enabling Bootstrap script
 #
@@ -80,21 +80,18 @@ if [ ! "$SUITE" -o ! "$TARGET" ]; then
     usage
 fi
 
-#declare -A URLs
-#declare -A URLs=( \
-#	["tumbleweed_armv6l"]="http://download.opensuse.org/ports/armv6hl/tumbleweed/images/openSUSE-Tumbleweed-ARM-JeOS.armv6-rootfs.armv6l-Current.tbz" \
-#	["tumbleweed_armv7l"]="http://download.opensuse.org/ports/armv7hl/tumbleweed/images/openSUSE-Tumbleweed-ARM-JeOS.armv7-rootfs.armv7l-Current.tbz" \
-#	["tumbleweed_aarch64"]="http://download.opensuse.org/ports/aarch64/tumbleweed/images/openSUSE-Tumbleweed-ARM-JeOS.aarch64-rootfs.aarch64-Current.tbz" \
-#	["tumbleweed_x86_64"]="http://download.opensuse.org/repositories/home:/algraf:/debootstrap/images/openSUSE-Tumbleweed-x86_64-JeOS.x86_64-rootfs.x86_64-Current.tbz" \
-#)
+url_tumbleweed_armv6l="http://download.opensuse.org/ports/armv6hl/tumbleweed/images/openSUSE-Tumbleweed-ARM-JeOS.armv6-rootfs.armv6l-Current.tbz"
+url_tumbleweed_armv7l="http://download.opensuse.org/ports/armv7hl/tumbleweed/images/openSUSE-Tumbleweed-ARM-JeOS.armv7-rootfs.armv7l-Current.tbz"
+url_tumbleweed_aarch64="http://download.opensuse.org/ports/aarch64/tumbleweed/images/openSUSE-Tumbleweed-ARM-JeOS.aarch64-rootfs.aarch64-Current.tbz"
+url_tumbleweed_x86_64="http://download.opensuse.org/repositories/home:/algraf:/debootstrap/images/openSUSE-Tumbleweed-x86_64-JeOS.x86_64-rootfs.x86_64-Current.tbz"
 
 # Rename factory to tumbleweed
 [ "$SUITE" = "factory" ] && SUITE=tumbleweed
+# fix up the good old toolchain/kernel naming conflict
+[ "$ARCH" = "arm64" ] && ARCH=aarch64
 
-#key="${SUITE}_${ARCH}"
-#URL="${URLs["$key"]}"
-
-URL='http://download.opensuse.org/ports/aarch64/tumbleweed/images/openSUSE-Tumbleweed-ARM-JeOS.aarch64-rootfs.aarch64-Current.tbz'
+key=$(echo "\$url_${SUITE}_${ARCH}")
+URL=$(echo $(eval echo "${key}"))
 
 if [ ! "$URL" ]; then
     echo "Unknown Distribution / Architecture: $key"
@@ -110,9 +107,9 @@ else
     exit 1
 fi
 
-if [ -e "$(which pbzip2)" ]; then
+if [ -e "$(which pbzip2 2>/dev/null)" ]; then
     BZIP2="pbzip2"
-elif [ -e "$(which bzip2)" ]; then
+elif [ -e "$(which bzip2 2>/dev/null)" ]; then
     BZIP2="bzip2"
 else
     echo "No decompression tool found."
